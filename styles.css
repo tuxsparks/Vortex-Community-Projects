@@ -73,7 +73,7 @@ p{
 .navbar a:focus-visible{opacity:.8;}
 
 .project-grid{
-  column-count: 1;
+  column-count: 3;
   column-gap: 1.5rem;
   padding:2rem;
   max-width:1200px;
@@ -81,17 +81,6 @@ p{
   column-fill: auto;
 }
 
-@media (min-width: 600px) {
-  .project-grid {
-    column-count: 2;
-  }
-}
-
-@media (min-width: 900px) {
-  .project-grid {
-    column-count: 3;
-  }
-}
 
 .project-card{
   background:var(--foreground);
