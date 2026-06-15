@@ -73,24 +73,24 @@ p{
 .navbar a:focus-visible{opacity:.8;}
 
 .project-grid{
-  column-count: 3;
-  column-gap: 1.5rem;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:1.5rem;
   padding:2rem;
   max-width:1200px;
   margin:auto;
-  column-fill: auto;
+  align-items:start;
 }
-
 
 .project-card{
   background:var(--foreground);
   border-radius:8px;
   overflow:hidden;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
-  display:block;
+  display:flex;
+  flex-direction:column;
   width:100%;
-  margin:0 0 1.5rem;
-  break-inside: avoid;
+  margin:0;
   transition:transform .15s ease,box-shadow .15s ease;
 }
 .project-card:hover{transform:translateY(-4px);box-shadow:0 8px 12px rgba(0,0,0,.2);}
