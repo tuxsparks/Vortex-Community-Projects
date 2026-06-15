@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Vortex Soundtracks</title>
+
+<style>
+  body{font-family:system-ui,sans-serif;background:#fafafa;color:#222;margin:0;padding:2rem;}
+  h1{margin-top:0;text-align:center;}
+
+  .song{
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+    padding:1.5rem;
+    margin-bottom:1.5rem;
+    max-width:600px;margin-left:auto;margin-right:auto;
+  }
+  .song h3{margin:0 0 .25rem;}
+  .song p{margin:.2rem 0 1rem;font-size:.9rem;color:#555;}
+
+  .controls{
+    display:flex;gap:.5rem;flex-wrap:wrap;
+  }
+  .controls button{
+    padding:.4rem .8rem;
+    font-size:.95rem;border:none;border-radius:4px;
+    background:#1976d2;color:white;
+    cursor:pointer;transition:background .15s;
+  }
+  .controls button:hover{background:#1565c0;}
+  .controls button:disabled{opacity:.5;cursor:not-allowed;}
+
+  .progress{
+    width:100%;margin-top:.8rem;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Vortex Original Soundtracks</h1>
+
+<div id="song-list"></div>
+
+
+<script>
+/* ======================  DATA ===================== */
+/* Replace <YOUR-USERNAME> and <YOUR-REPO> with your own values. */
+const USER = "<YOUR-USERNAME>";
+const REPO = "<YOUR-REPO>";
+
+const baseURL = `https://raw.githubusercontent.com/${USER}/${REPO}/Music/`;
+
+const songs = [
+  {
+    title:"A New Start",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "A%20New%20Start%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20143%20kbps%20original.mp3"
+  },
+  {
+    title:"Banlands",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Banlands%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20130%20kbps%20original.mp3"
+  },
+  {
+    title:"Freezerator",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Freezerator%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20144%20kbps%20english%20%28original%29.mp3"
+  },
+  {
+    title:"Looking Spectacular",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Looking%20Spectacular%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20151%20kbps%20english%20%28original%29.mp3"
+  },
+  {
+    title:"Seven Seas",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Seven%20Seas%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20142%20kbps%20english%20%28original%29.mp3"
+  },
+  {
+    title:"Temp",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Temp%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20129%20kbps%20original.mp3"
+  },
+  {
+    title:"Vorbits",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Vorbits%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20129%20kbps%20original.mp3"
+  },
+  {
+    title:"Voxel",
+    artist:"Vortex Original Sound Track",
+    url: baseURL + "Voxel%20-%20Vortex%20Original%20Sound%20Track%20%5BOST%5D%20audio%20140%20kbps%20english%20%28original%29.mp3"
+  }
+];
+
+/* ======================  RENDERING ===================== */
+const listEl = document.getElementById('song-list');
+
+songs.forEach((s, i) => {
+  const songDiv = document.createElement('div');
+  songDiv.className = 'song';
+
+  // Title
+  const h3 = document.createElement('h3');
+  h3.textContent = s.title;
+  songDiv.appendChild(h3);
+
+  // Artist (optional)
+  const p = document.createElement('p');
+  p.innerHTML = `<strong>Artist:</strong> ${s.artist}`;
+  songDiv.appendChild(p);
+
+  // Audio element
+  const audioId = `audio-${i}`;
+  const audioEl = document.createElement('audio');
+  audioEl.id = audioId;
+  audioEl.src = s.url;
+  audioEl.preload = 'none';   // we’ll preload when the user clicks “Play”
+  songDiv.appendChild(audioEl);
+
+  // Controls
+  const controls = document.createElement('div');
+  controls.className = 'controls';
+
+  const playBtn = document.createElement('button');
+  playBtn.textContent = '▶ Play';
+  playBtn.onclick = () => togglePlay(i);
+  controls.appendChild(playBtn);
+
+  const muteBtn = document.createElement('button');
+  muteBtn.textContent = '🔇 Mute';
+  muteBtn.onclick = () => toggleMute(i);
+  controls.appendChild(muteBtn);
+
+  // Custom link (you can use this if you want a “View on GitHub” link)
+  const viewLink = document.createElement('a');
+  viewLink.href = s.url;
+  viewLink.textContent = 'Download';
+  viewLink.target = '_blank';
+  viewLink.rel = 'noopener noreferrer';
+  viewLink.style.color = '#1976d2';
+  viewLink.style.textDecoration = 'none';
+  viewLink.onmouseover = () => viewLink.style.textDecoration = 'underline';
+  viewLink.onmouseout = () => viewLink.style.textDecoration = 'none';
+  controls.appendChild(viewLink);
+
+  songDiv.appendChild(controls);
+
+  // Progress bar (optional)
+  const progressBar = document.createElement('input');
+  progressBar.type = 'range';
+  progressBar.min = 0;
+  progressBar.max = 100;
+  progressBar.value = 0;
+  progressBar.className = 'progress';
+  songDiv.appendChild(progressBar);
+
+  listEl.appendChild(songDiv);
+});
+
+/* ======================  HELPERS ===================== */
+function togglePlay(idx) {
+  const audio = document.getElementById(`audio-${idx}`);
+  if (!audio) return;
+
+  // Pause any other playing track
+  songs.forEach((_, i) => {
+    if (i !== idx) {
+      const a = document.getElementById(`audio-${i}`);
+      if (a && !a.paused) a.pause();
+    }
+  });
+
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
+
+function toggleMute(idx) {
+  const audio = document.getElementById(`audio-${idx}`);
+  if (!audio) return;
+  audio.muted = !audio.muted;
+}
+
+/* ======================  DARK‑MODE TOGGLE ===================== */
+const darkBtn = document.createElement('button');
+darkBtn.textContent = '🌙 Dark Mode';
+darkBtn.style.position = 'fixed';
+darkBtn.style.top = '1rem';
+darkBtn.style.right = '1rem';
+darkBtn.onclick = () => {
+  document.body.classList.toggle('dark-mode');
+};
+document.body.appendChild(darkBtn);
+
+/* Simple dark‑mode styles (you can extend them) */
+const styleEl = document.createElement('style');
+styleEl.textContent = `
+  .dark-mode { background:#121212; color:#e0e0e0; }
+  .dark-mode .song { background:#1e1e1e; box-shadow:0 2px 6px rgba(255,255,255,.08); }
+  .dark-mode a, .dark-mode button { color:#fafafa; }
+`;
+document.head.appendChild(styleEl);
+</script>
+
+</body>
+</html>
