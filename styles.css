@@ -1,10 +1,10 @@
 
 :root {
-  --primary: #1e90ff;          
-  --secondary: #ff6347;
-  --background: #f5f5f5;       
-  --foreground: #ffffff;       
-  --text: #222222;             
+  --primary: #c53bc5;          
+  --secondary: #2fc047;
+  --background: #000000;       
+  --foreground: #58425e;       
+  --text: #ffffff;             
 
   --link-color: var(--primary);
   --button-bg: var(--primary);
