@@ -72,14 +72,13 @@ p{
 .navbar a:hover,
 .navbar a:focus-visible{opacity:.8;}
 
-.project-grid{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:1.5rem;
+ .project-grid{
+  column-count: 3;
+  column-gap: 1.5rem;
   padding:2rem;
   max-width:1200px;
   margin:auto;
-  align-items:start;
+  column-fill: auto;
 }
 
 .project-card{
@@ -87,10 +86,11 @@ p{
   border-radius:8px;
   overflow:hidden;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
-  display:flex;
-  flex-direction:column;
+  display:inline-block;
   width:100%;
-  margin:0;
+  margin:0 0 1.5rem;
+  break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
   transition:transform .15s ease,box-shadow .15s ease;
 }
 .project-card:hover{transform:translateY(-4px);box-shadow:0 8px 12px rgba(0,0,0,.2);}
