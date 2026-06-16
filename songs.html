@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="styles.css">
 <title>My Vortex Soundtracks</title>
 
 <style>
@@ -45,8 +46,6 @@
 
 
 <script>
-/* ======================  DATA ===================== */
-/* Replace <YOUR-USERNAME> and <YOUR-REPO> with your own values. */
 const USER = "tuxsparks";
 const REPO = "Vortex-Archive";
 
@@ -95,32 +94,27 @@ const songs = [
   }
 ];
 
-/* ======================  RENDERING ===================== */
 const listEl = document.getElementById('song-list');
 
 songs.forEach((s, i) => {
   const songDiv = document.createElement('div');
   songDiv.className = 'song';
 
-  // Title
   const h3 = document.createElement('h3');
   h3.textContent = s.title;
   songDiv.appendChild(h3);
 
-  // Artist (optional)
   const p = document.createElement('p');
   p.innerHTML = `<strong>Artist:</strong> ${s.artist}`;
   songDiv.appendChild(p);
 
-  // Audio element
   const audioId = `audio-${i}`;
   const audioEl = document.createElement('audio');
   audioEl.id = audioId;
   audioEl.src = s.url;
-  audioEl.preload = 'none';   // we’ll preload when the user clicks “Play”
+  audioEl.preload = 'none'; 
   songDiv.appendChild(audioEl);
 
-  // Controls
   const controls = document.createElement('div');
   controls.className = 'controls';
 
@@ -128,11 +122,6 @@ songs.forEach((s, i) => {
   playBtn.textContent = '▶ Play';
   playBtn.onclick = () => togglePlay(i);
   controls.appendChild(playBtn);
-
-  const muteBtn = document.createElement('button');
-  muteBtn.textContent = '🔇 Mute';
-  muteBtn.onclick = () => toggleMute(i);
-  controls.appendChild(muteBtn);
 
   // Custom link (you can use this if you want a “View on GitHub” link)
   const viewLink = document.createElement('a');
@@ -148,19 +137,9 @@ songs.forEach((s, i) => {
 
   songDiv.appendChild(controls);
 
-  // Progress bar (optional)
-  const progressBar = document.createElement('input');
-  progressBar.type = 'range';
-  progressBar.min = 0;
-  progressBar.max = 100;
-  progressBar.value = 0;
-  progressBar.className = 'progress';
-  songDiv.appendChild(progressBar);
 
-  listEl.appendChild(songDiv);
 });
 
-/* ======================  HELPERS ===================== */
 function togglePlay(idx) {
   const audio = document.getElementById(`audio-${idx}`);
   if (!audio) return;
@@ -186,7 +165,6 @@ function toggleMute(idx) {
   audio.muted = !audio.muted;
 }
 
-/* ======================  DARK‑MODE TOGGLE ===================== */
 const darkBtn = document.createElement('button');
 darkBtn.textContent = '🌙 Dark Mode';
 darkBtn.style.position = 'fixed';
