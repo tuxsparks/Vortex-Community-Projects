@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="styles.css">   <!-- keep if you have an external file -->
+<link rel="stylesheet" href="styles.css"> 
 <link rel="icon" type="image/x-icon" href="favicon.png">
 <title>Vortex OST's</title>
 
@@ -33,7 +33,6 @@
   .controls button:hover{background:#1565c0;}
   .controls button:disabled{opacity:.5;cursor:not-allowed;}
 
-  /* The progress bar CSS is no longer needed – you can delete it if you wish */
 </style>
 </head>
 
@@ -111,7 +110,6 @@ songs.forEach((s, i) => {
 
   songDiv.appendChild(controls);
 
-  /* ---- INSERT THE CARD INTO THE PAGE ---- */
   listEl.appendChild(songDiv);
 });
 
@@ -119,7 +117,6 @@ function togglePlay(idx) {
   const audio = document.getElementById(`audio-${idx}`);
   if (!audio) return;
 
-  // Pause any other playing track
   songs.forEach((_, i) => {
     if (i !== idx) {
       const a = document.getElementById(`audio-${i}`);
@@ -127,11 +124,9 @@ function togglePlay(idx) {
     }
   });
 
-  // Toggle current track
   audio.paused ? audio.play() : audio.pause();
 }
 
-/* The mute helper is no longer needed – it’s removed */
 </script>
 </body>
 </html>
